@@ -20,7 +20,7 @@ services:
       dockerfile: Dockerfile
     image: todo-app-frontend
     ports:
-      - "6000:6000"
+      - "3000:3000"
     volumes:
       - ./todo-app-frontend:/app
     depends_on:
