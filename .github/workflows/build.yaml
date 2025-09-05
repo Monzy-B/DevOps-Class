@@ -31,8 +31,8 @@ jobs:
         run: terraform plan -var="ec2_public_key=${{ secrets.SSH_KEY }}"
         working-directory: ./Terraform
 
-      - name: Terraform Apply
-        run: terraform apply -auto-approve -var="ec2_public_key=${{ secrets.SSH_KEY }}"
+      - name: Terraform Destroy
+        run: terraform destroy -auto-approve -var="ec2_public_key=${{ secrets.SSH_KEY }}"
         working-directory: ./Terraform
 
       - name: Login to Amazon ECR
