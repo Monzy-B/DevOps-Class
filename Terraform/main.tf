@@ -45,7 +45,7 @@ resource "aws_route_table_association" "public_assoc" {
 
 resource "aws_key_pair" "devops-class-key-pair" {
   key_name   = "devops-class-key-pair"
-  public_key = file("~/.ssh/id_rsa.pub")
+  public_key = var.ec2_public_key
 }
 
 resource "aws_security_group" "allow_tls" {

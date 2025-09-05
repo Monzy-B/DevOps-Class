@@ -12,3 +12,8 @@ variable "instance_type" {
   type        = string
   description = "Type Of AWS Instance to Use"
 }
+
+variable "ec2_public_key" {
+  description = "Public key for EC2 instance SSH access"
+  type        = string
+}
