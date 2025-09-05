@@ -1,27 +1,28 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: todo-app-frontend
+  name: workwave-deployment
+  labels:
+    app: workwave
 spec:
-  automountServiceAccountToken: false
-  replicas:  2
+  replicas: 4   
   selector:
     matchLabels:
-      app: todo-app-frontend
+      app: workwave
   template:
     metadata:
       labels:
-        app: todo-app-frontend
+        app: workwave
     spec:
       containers:
-      - name: todo-app-frontend
-        image: ifeoluwashola/todo-app:frontend_v2
-        ports:
-        - containerPort:  3000
-        resources:
-          requests:
-            cpu:  200m
-            memory:  128Mi
-          limits:
-            cpu:  500m
-            memory:  300Mi
+        - name: workwave-container
+          image: jephnewman/workwave:workwave-image
+          ports:
+            - containerPort: 80
+          resources:
+            requests:
+              cpu: "100m"        
+              memory: "128Mi"    
+            limits:
+              cpu: "500m"        
+              memory: "256Mi"    

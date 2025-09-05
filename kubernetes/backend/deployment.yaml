@@ -1,44 +1,28 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: todo-app-backend
+  name: weather-deployment
+  labels:
+    app: weather
 spec:
-  replicas:  2
+  replicas: 3  
   selector:
     matchLabels:
-      app: todo-app-backend
+      app: weather
   template:
     metadata:
       labels:
-        app: todo-app-backend
+        app: weather
     spec:
-      automountServiceAccountToken: false
       containers:
-      - name: todo-app-backend
-        image: ifeoluwashola/todo-app:backend_v2
-        ports:
-        - containerPort: 5000
-        env:
-        - name: POSTGRES_USER
-          valueFrom:
-            secretKeyRef:
-              name: todo-app-db-secret
-              key: username
-        - name: POSTGRES_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: todo-app-db-secret
-              key: password
-        - name: POSTGRES_HOST
-          value: todo-app-db-service
-        - name: POSTGRES_PORT
-          value: "5432"
-        - name: POSTGRES_DB
-          value: todo_app
-        resources:
-          requests:
-            cpu:  200m
-            memory:  128Mi
-          limits:
-            cpu:  500m
-            memory:  300Mi
+        - name: weather-app
+          image: tomiwadevops/weather-app:ci-cd  # jephnewman/workwave:workwave-image
+          ports:
+            - containerPort: 5000
+          resources:
+            requests:
+              cpu: "100m"        
+              memory: "128Mi"    
+            limits:
+              cpu: "500m"        
+              memory: "256Mi"    

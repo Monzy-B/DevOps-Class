@@ -1,12 +1,12 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: todo-app-frontend-service
+  name: workwave-deployment
 spec:
   selector:
-    app: todo-app-frontend
+    app: workwave
   ports:
     - protocol: TCP
       port:  80
-      targetPort:  3000
+      targetPort:  80
   type: NodePort
