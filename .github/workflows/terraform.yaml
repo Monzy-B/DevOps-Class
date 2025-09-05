@@ -3,11 +3,8 @@ on:
   push:
     branches:
       - master
-      - devops-class
     paths:
         Terraform/
-  pull_request:
-    types: [opened, synchronize, reopened, closed]
 
 jobs:
   sonarcloud:
@@ -40,8 +37,8 @@ jobs:
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-access-key-id: ${{ secrets.TF_USER_AWS_KEY }}
+          aws-secret-access-key: ${{ secrets.TF_USER_AWS_SECRET }}
           aws-region: eu-west-2
 
       - name: Setup Terraform
@@ -54,9 +51,9 @@ jobs:
         run: terraform plan -var-file='var/dev.tfvars'
         
       - name: Terraform Apply
-        if: github.ref == 'refs/heads/master' && (github.event.pull_request.merged == true || github.event_name == 'push')
+        if: github.ref == 'refs/heads/master'
         run: terraform apply -auto-approve -var-file='var/dev.tfvars'
 
-      - name: Terraform Destroy
-        if: github.ref == 'refs/heads/master' && (github.event.pull_request.merged == true || github.event_name == 'push')
+      - name: Terraform destroy
+        if: github.ref == 'refs/heads/master'
         run: terraform destroy -auto-approve -var-file='var/dev.tfvars'
