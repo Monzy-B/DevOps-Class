@@ -27,7 +27,7 @@ jobs:
         run: |
           IMAGE_URI=${{ steps.login-ecr.outputs.registry }}/todo-app:latest
           echo "IMAGE_URI=$IMAGE_URI" >> $GITHUB_ENV
-          docker build -t $IMAGE_URI .
+          docker build -t $IMAGE_URI -f ./todo-app-frontend/Dockerfile ./todo-app-frontend
           docker push $IMAGE_URI
 
       - name: Setup Terraform
