@@ -1,59 +1,59 @@
-name: Deploy Terraform Configuration
-on:
-  push:
-    branches:
-      - master
-    paths:
-        Terraform/
+# name: Deploy Terraform Configuration
+# on:
+#   push:
+#     branches:
+#       - master
+#     paths:
+#         Terraform/
 
-jobs:
-  sonarcloud:
-    name: Code analysis with SonarCloud
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-      - name: SonarCloud Scan
-        uses: SonarSource/sonarcloud-github-action@master
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+# jobs:
+#   sonarcloud:
+#     name: Code analysis with SonarCloud
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: actions/checkout@v3
+#         with:
+#           fetch-depth: 0
+#       - name: SonarCloud Scan
+#         uses: SonarSource/sonarcloud-github-action@master
+#         env:
+#           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
-  terraform:
-    runs-on: ubuntu-latest
-    defaults:
-        run:
-          working-directory: Terraform
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
+#   terraform:
+#     runs-on: ubuntu-latest
+#     defaults:
+#         run:
+#           working-directory: Terraform
+#     steps:
+#       - name: Checkout repository
+#         uses: actions/checkout@v2
 
-      - name: Setup SSH
-        run: |
-           mkdir ~/.ssh
-           echo "${{ secrets.SSH_KEY }}" > ~/.ssh/id_ed25519.pub
+#       - name: Setup SSH
+#         run: |
+#            mkdir ~/.ssh
+#            echo "${{ secrets.SSH_KEY }}" > ~/.ssh/id_ed25519.pub
        
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.TF_USER_AWS_KEY }}
-          aws-secret-access-key: ${{ secrets.TF_USER_AWS_SECRET }}
-          aws-region: eu-west-2
+#       - name: Configure AWS credentials
+#         uses: aws-actions/configure-aws-credentials@v1
+#         with:
+#           aws-access-key-id: ${{ secrets.TF_USER_AWS_KEY }}
+#           aws-secret-access-key: ${{ secrets.TF_USER_AWS_SECRET }}
+#           aws-region: eu-west-2
 
-      - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v1
+#       - name: Setup Terraform
+#         uses: hashicorp/setup-terraform@v1
         
-      - name: Terraform Init
-        run: terraform init
+#       - name: Terraform Init
+#         run: terraform init
         
-      - name: Terraform Plan
-        run: terraform plan -var-file='var/dev.tfvars'
+#       - name: Terraform Plan
+#         run: terraform plan -var-file='var/dev.tfvars'
         
-      - name: Terraform Apply
-        if: github.ref == 'refs/heads/master'
-        run: terraform apply -auto-approve -var-file='var/dev.tfvars'
+#       - name: Terraform Apply
+#         if: github.ref == 'refs/heads/master'
+#         run: terraform apply -auto-approve -var-file='var/dev.tfvars'
 
-      - name: Terraform destroy
-        if: github.ref == 'refs/heads/master'
-        run: terraform destroy -auto-approve -var-file='var/dev.tfvars'
+#       - name: Terraform destroy
+#         if: github.ref == 'refs/heads/master'
+#         run: terraform destroy -auto-approve -var-file='var/dev.tfvars'
