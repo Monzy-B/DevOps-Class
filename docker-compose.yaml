@@ -6,13 +6,13 @@ services:
     image: todo-app-backend
     ports:
       - "5000:5000"
-    # env_file:
-    #   - .env
+    env_file:
+      - .env
     volumes:
       - ./todo-app-backend:/app
-    # depends_on:
-    #   db:
-    #     condition: service_healthy
+    depends_on:
+      db:
+        condition: service_healthy
 
   todo-app-frontend:
     build:
@@ -26,19 +26,19 @@ services:
     depends_on:
       - todo-app-backend
 
-  # db:
-  #   image: postgres:alpine
-  #   ports:
-  #     - "5432:5432"
-  #   env_file:
-  #     - ./.env
-  #   volumes:
-  #     - pgdata:/var/lib/postgresql/data
-  #   healthcheck:
-  #     test: ["CMD", "pg_isready", "-U", "postgres"]
-  #     interval:  30s
-  #     timeout:  30s
-  #     retries:  3
+  db:
+    image: postgres:alpine
+    ports:
+      - "5432:5432"
+    env_file:
+      - ./.env
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "postgres"]
+      interval:  30s
+      timeout:  30s
+      retries:  3
 
 volumes:
   pgdata:
