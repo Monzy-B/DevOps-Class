@@ -11,7 +11,7 @@ on:
   pull_request:
 
 env:
-  DOCKER_USERNAME: tomiwadevops
+  DOCKERHUB_USERNAME: tomiwadevops
 
 jobs:
   build:
@@ -24,14 +24,14 @@ jobs:
         id: meta-frontend
         uses: docker/metadata-action@v5
         with:
-          images: ${{ env.DOCKER_USERNAME }}/todo-app-frontend
+          images: ${{ env.DOCKERHUB_USERNAME }}/todo-app-frontend
           tags: |
              type=sha
 
       - name: Log in to Docker Hub
         uses: docker/login-action@v3
         with:
-          username: ${{ env.DOCKER_USERNAME }}
+          username: ${{ env.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
 
       - name: Set up Docker Buildx
