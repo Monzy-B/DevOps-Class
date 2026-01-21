@@ -1,8 +1,8 @@
 services:
   todo-app-backend:
     build:
-      context: ./todo-app-backend
-      dockerfile: Dockerfile
+       context: ./todo-app-backend
+       dockerfile: Dockerfile
     image: todo-app-backend
     ports:
       - "5000:5000"

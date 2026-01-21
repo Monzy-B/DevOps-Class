@@ -10,7 +10,7 @@ on:
   pull_request:
 
 env:
-  DOCKER_USERNAME: tomiwadevops
+  DOCKER_USERNAME: tbouy2022
 
 jobs:
   build:
@@ -55,12 +55,13 @@ jobs:
           tags: |
              type=sha
 
-      - name: Build and push Docker image
+      - name: Build  and push Docker image
         uses: docker/build-push-action@v6
-        with:
+        with: 
           context: ./todo-app-backend
           push: ${{ github.event_name != 'pull_request' }}
-          tags: ${{ steps.meta-backend.outputs.tags }}
+          tags: ${{ steps.meta-backend.out
+          puts.tags }}
           annotations: ${{ steps.meta-backend.outputs.annotations }}
           provenance: true
           sbom: true
