@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: todo-app-frontend
 spec:
-  replicas:  2
+  replicas:  4
   selector:
     matchLabels:
       app: todo-app-frontend
@@ -14,9 +14,9 @@ spec:
     spec:
       containers:
       - name: todo-app-frontend
-        image: ifeoluwashola/todo-app:frontend_v2
+        image: nginx:stable-alpine3.23
         ports:
-        - containerPort:  3000
+        - containerPort:  80
         resources:
           requests:
             cpu:  200m
