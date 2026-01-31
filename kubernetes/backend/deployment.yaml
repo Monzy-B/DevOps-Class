@@ -15,7 +15,7 @@ spec:
       automountServiceAccountToken: false
       containers:
       - name: todo-app-backend
-        image: ifeoluwashola/todo-app:backend_v2
+        image: jephnewman/workwave:workwave-image
         ports:
         - containerPort: 5000
         env:
